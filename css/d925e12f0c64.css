@@ -1,0 +1,45 @@
+#main_container {
+  width: 550px;
+  height: 550px;
+  background: white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 0px;
+  padding-right: 0px; 
+}
+
+#animation {
+  margin-top: 10px;
+  float: left;
+  text-align: center;
+  width: 400px;
+}
+  #animation .button {
+    /* background: -webkit-linear-gradient(top, red, green); */
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    width: 150px;
+    border-width: 1px;
+    padding: 10px;
+    margin: 2px; 
+}
+
+#snowflakeposition {
+  margin-top: 10px;
+  float: left;
+  width: 500px;
+  height: 500px;
+}
+
+/* $fill_color: #98e8f9; */
+.snowflake.even {
+  fill: #42cae9; 
+}
+.snowflake.odd {
+  fill: #9ee4f3; 
+}
+
+/*#rss_chart {
+  display: none; 
+}*/

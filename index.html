@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<script type="text/javascript" src="js/a2fa5b50f404.js"></script>
+<link rel="stylesheet" href="css/d925e12f0c64.css" type="text/css" media="screen" />
+
+<title>Carbon Offsets FRQ </title>
+
+<link rel="shortcut icon" href="greenenergy.png">
+
+<!-- the background color is the color surrounding the worksheet-->
+
+
+<style>
+
+div#right { 
+    width: 450px;
+    float: right;  
+    margin: 10 5px;  
+    	font-size: 22px;
+ }
+
+h1 {
+	margin-right: 20px;
+	margin-left: 20px;
+}
+
+h4 {
+	margin-right: 20px;
+	margin-left: 20px;
+}
+
+ </style>
+
+
+<!-- I downloaded TwentyTen Wordpress theme - that is what the mathjax css is based on - and found the css for the show/hide buttons using the inspect element feature, then copied it here-->
+<style type="text/css" id="input">
+#content input,
+#content textarea {
+  color: #F2072E;
+  font-weight: bold;
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+<h1>Offsetting Carbon Emissions With Forests</h1>
+
+<h4><i>"Cut" the folded paper by adjusting position of black dots with your cursor. When finished making your "cuts" click on Create Snowflake to see the transformation!  Don't forget to try the energy math problems for each town to the right!</i></h4>
+
+<div id="right">
+<br/><br/>
+<a target="_blank" href="OCEBurlington.html">Burlington, VT</a>
+<br/><br/>
+<br/><br/>
+<a target="_blank" href="OCEColumbia.html">Columbia, MD</a>
+<br/><br/>
+<br/><br/>
+<a target="_blank" href="OCEFremont.html">Fremont, CA</a>
+<br/><br/>
+<br/><br/>
+<a target="_blank" href="OCEMechanicsburg.html">Mechanicsburg, PA</a>
+<br/><br/>
+<br/><br/>
+<a target="_blank" href="OCEWoodbury.html">Woodbury, CT</a>
+<br/><br/>
+<br/><br/>
+</div>
+
+<div id="main_container">
+  <div id="animation">
+    <button id="animation_button" class="button"
+    onclick="click_animation_button()">Create Snowflake</button> 
+    <button id="reset_button" class="button"
+    onclick="click_reset_button()">New Paper</button>
+	</div>
+	<br></br>
+	<br>
+	<div id="snowflakeposition">
+	</div>
+</div>
+
+<script type="text/javascript">
+  // Some variables that will be helpful to define
+var height = 500;
+var width = 500;
+var padding = 30;
+var duration = 800;
+
+var triangle_vertices = [
+    [width/2,padding],
+    [width-padding,padding],
+    [width/2,height/2],
+];
+
+// create the points on the edge for the circles
+var num_points_on_edge = 5;
+var data_1 = create_points(triangle_vertices[triangle_vertices.length-1],triangle_vertices[0], num_points_on_edge);
+// var data_1 = [];
+for (var i = 0; i < triangle_vertices.length-1; i++){
+    data_1 = data_1.concat(create_points(triangle_vertices[i],triangle_vertices[i+1], num_points_on_edge))
+}
+
+// Initialize the two svg canvgases
+var svg = d3.select("#snowflakeposition")
+    .append("svg")
+    .attr("width", width + padding)
+    .attr("height", height + padding);
+
+var line = d3.svg.line()
+    .x(function(d) { 
+	return d[0]})
+    .y(function(d) { return d[1]});
+
+var first_flip = d3.svg.line()
+    .x(function(d) { 
+	return x_scale(d[1])})
+    .y(function(d) { return y_scale(d[0])});
+
+var second_flip = d3.svg.line()
+    .x(function(d) { 
+	return x_scale(d[0])})
+    .y(function(d) { return d[1]});
+
+var third_flip = d3.svg.line()
+    .x(function(d) { 
+	return d[0]})
+    .y(function(d) { return y_scale(d[1])});
+
+var x_scale = d3.scale.linear()
+    .domain([0,width])
+    .range([width, 0]);
+var y_scale = d3.scale.linear()
+    .domain([0,height])
+    .range([height, 0]);
+
+var gradient = svg.append("svg:defs")
+    .append("svg:linearGradient")
+    .attr("id", "gradient")
+    .attr("x1", "0%")
+    .attr("y1", "0%")
+    .attr("x2", "50%")
+    .attr("y2", "50%")
+    .attr("spreadMethod", "pad");
+
+gradient.append("svg:stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "#42cae9")
+    .attr("stop-opacity", 1);
+
+gradient.append("svg:stop")
+    .attr("offset", "100%")
+    .attr("stop-color", "#9ee4f3")
+    .attr("stop-opacity", 1);
+
+var gradient_2 = svg.append("svg:defs")
+    .append("svg:linearGradient")
+    .attr("id", "gradient_2")
+    .attr("x1", "50%")
+    .attr("y1", "50%")
+    .attr("x2", "100%")
+    .attr("y2", "100%")
+    .attr("spreadMethod", "pad");
+
+gradient_2.append("svg:stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "#9ee4f3")
+    .attr("stop-opacity", 1);
+
+gradient_2.append("svg:stop")
+    .attr("offset", "100%")
+    .attr("stop-color", "#42cae9")
+    .attr("stop-opacity", 1);
+
+var gradient_3 = svg.append("svg:defs")
+    .append("svg:linearGradient")
+    .attr("id", "gradient_3")
+    .attr("x1", "100%")
+    .attr("y1", "0%")
+    .attr("x2", "50%")
+    .attr("y2", "50%")
+    .attr("spreadMethod", "pad");
+
+gradient_3.append("svg:stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "#42cae9")
+    .attr("stop-opacity", 1);
+
+gradient_3.append("svg:stop")
+    .attr("offset", "100%")
+    .attr("stop-color", "#9ee4f3")
+    .attr("stop-opacity", 1);
+
+var gradient_4 = svg.append("svg:defs")
+    .append("svg:linearGradient")
+    .attr("id", "gradient_4")
+    .attr("x1", "0%")
+    .attr("y1", "100%")
+    .attr("x2", "100%")
+    .attr("y2", "0%")
+    .attr("spreadMethod", "pad");
+
+gradient_4.append("svg:stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "#42cae9")
+    .attr("stop-opacity", 1);
+
+gradient_4.append("svg:stop")
+    .attr("offset", "50%")
+    .attr("stop-color", "#9ee4f3")
+    .attr("stop-opacity", 1);
+
+initial_draw();
+
+var path_1;
+
+function initial_draw(){    
+    path_1 = svg.selectAll(".path_1")
+	.data([data_1]);
+    path_1.enter().append("path")
+	.classed("snowflake",true)
+	.classed("odd",true);
+    path_1.transition().duration(duration)
+	.attr("d",function(d){return line(d)});
+
+    svg.selectAll("circle").remove();
+    
+    var circles = svg.selectAll("circle")
+	.data(data_1)
+	.enter().append("circle")
+	.attr("cx",function(d){return d[0]})
+	.attr("cy",function(d){return d[1]})
+	.attr("r", 8)
+	.attr("stroke","none")
+	.attr("fill","#666")
+	.call(d3.behavior.drag()
+	      .on("dragstart",function (d, i) {
+		  this.__origin__ = d;
+	      })
+	      .on("drag", function (d, i) {
+
+		  if (point_in_triangle(triangle_vertices[0],
+					triangle_vertices[1],
+					triangle_vertices[2],
+					this)){
+
+		      d[0] = this.__origin__[0] + d3.event.dx;
+		      d[1] = this.__origin__[1] + d3.event.dy
+		      
+		      d3.select(this).attr("cx", d[0]);
+		      d3.select(this).attr("cy", d[1]);
+		      data_1[i] = [d[0],d[1]];
+		      path_1.transition().duration(0)
+			  .attr("d",function(d){return line(d)});
+		  }
+		  else{
+		      d = this.__origin__;
+		  }
+	      })
+	      .on("dragend", function (d) {
+		  delete this.__origin__;
+	      }));
+}
+
+function click_animation_button() {
+    var create = "Create Snowflake";
+    var reset = "Reset Paper";
+    if ($("#animation_button").html() == create){
+	$("#animation_button").html(reset);
+	animate_snowflake();
+    } 
+    else {
+	$("#animation_button").html(create);
+	
+	reset_snowflake();
+    }
+}
+
+function click_reset_button() {
+    data_1 = create_points(triangle_vertices[triangle_vertices.length-1],
+			   triangle_vertices[0], 
+			   num_points_on_edge);
+    for (var i = 0; i < triangle_vertices.length-1; i++){
+	data_1 = data_1.concat(create_points(triangle_vertices[i],triangle_vertices[i+1], num_points_on_edge))
+    }
+    $("#animation_button").html("Create Snowflake");
+    reset_snowflake();    
+}
+
+function reset_snowflake(){
+    svg.selectAll(".snowflake")
+	.remove();
+    initial_draw();
+}
+
+function animate_snowflake(){
+    var circles = svg.selectAll("circle")
+	.remove();
+    d3.select(".snowflake")
+	.transition().duration(0);
+    var path_2 = svg.selectAll(".path_2")
+	.data([data_1]);
+    path_2.enter().append("path")
+	.attr("class","path_2")
+	.classed("snowflake",true)
+	.classed("even",true)
+	.attr("d",function (d){return line(d);})
+	.transition().duration(duration)
+	.attr("d",function(d){return first_flip(d)});
+    	
+    setTimeout(function(){
+	var data_2 = create_data(path_2);
+
+	var path_3 = svg.selectAll(".path_3")
+	    .data([data_1]);
+	path_3.enter().append("path")
+	    .attr("class","path_3")
+	    .classed("snowflake",true)
+	    .classed("odd",true)
+	    .attr("d",function(d){return line(d)});
+	path_3.transition().duration(duration)
+	    .attr("d",function(d){return second_flip(d)});
+
+	var path_4 = svg.selectAll(".path_4")
+	    .data([data_2]);
+
+	path_4.enter().append("path")
+	    .attr("class","path_4")
+	    .classed("snowflake",true)
+	    .classed("even",true)
+	    .attr("d",function(d){return line(d)});
+	path_4.transition().duration(duration)
+	    .attr("d",function(d){return second_flip(d)});
+
+	setTimeout(function(){
+	    var data_3 = create_data(path_3);
+	    var data_4 = create_data(path_4);
+	    
+	    var path_5 = svg.selectAll(".path_5")
+		.data([data_1]);
+	    path_5.enter().append("path")
+		.attr("class","path_5")
+		.classed("snowflake",true)
+		.classed("odd",true)
+		.attr("d",function(d){return line(d)});
+	    path_5.transition().duration(duration)
+		.attr("d",function(d){return third_flip(d)});
+
+	    var path_8 = svg.selectAll(".path_8")
+		.data([data_4]);
+	    path_8.enter().append("path")
+		.attr("class","path_8")
+		.classed("snowflake",true)
+		.classed("even",true)
+		.attr("d",function(d){return line(d)});
+	    path_8.transition().duration(duration)
+		.attr("d",function(d){return third_flip(d)});
+
+	    var path_7 = svg.selectAll(".path_7")
+		.data([data_3]);
+	    path_7.enter().append("path")
+		.attr("class","path_7")
+		.classed("snowflake",true)
+		.classed("odd",true)
+		.attr("d",function(d){return line(d)});
+	    path_7.transition().duration(duration)
+		.attr("d",function(d){return third_flip(d)});
+
+	    var path_6 = svg.selectAll(".path_6")
+		.data([data_2]);
+	    path_6.enter().append("path")
+		.attr("class","path_6")
+		.classed("snowflake",true)
+		.classed("even",true)
+		.attr("d",function(d){return line(d)});
+	    path_6.transition().duration(duration)
+    		.attr("d", function(d){return third_flip(d)});
+
+	    // add some glitter and the gradients to make it all purty
+	    setTimeout(function () {
+		// third flip gradient change using opacity
+		var gradient_5 = svg.selectAll(".gradient_5")
+		    .data([data_1]);
+		gradient_5.enter().append("path")
+		    .attr("d",function(d){return third_flip(d)})
+		    .attr("fill","url(#gradient_4)")
+		    .attr("class","snowflake")
+		    .attr("opacity",0);
+		gradient_5.transition().duration(duration)
+		    .attr("opacity",1);
+
+		var gradient_8 = svg.selectAll(".gradient_8")
+		    .data([data_4]);
+		gradient_8.enter().append("path")
+		    .attr("d",function(d){return third_flip(d)})
+		    .attr("fill","url(#gradient)")
+		    .attr("class","snowflake")
+		    .attr("opacity",0);
+		gradient_8.transition().duration(duration)
+		    .attr("opacity",1);
+
+		var gradient_7 = svg.selectAll(".gradient_7")
+		    .data([data_3]);
+		gradient_7.enter().append("path")
+		    .attr("d",function(d){return third_flip(d)})
+		    .attr("fill","url(#gradient_2)")
+		    .attr("class","snowflake")
+		    .attr("opacity",0);
+		gradient_7.transition().duration(duration)
+		    .attr("opacity",1);
+
+		var gradient_6 = svg.selectAll(".gradient_6")
+		    .data([data_2]);
+		gradient_6.enter().append("path")
+		    .attr("d",function(d){return third_flip(d)})
+		    .attr("fill","url(#gradient_3)")
+		    .attr("class","snowflake")
+		    .attr("opacity",0);
+		gradient_6.transition().duration(duration)
+		    .attr("opacity",1);
+
+		// second_flip gradient
+		var gradient_3 = svg.selectAll(".gradient_3")
+		    .data([data_1]);
+		gradient_3.enter().append("path")
+		    .attr("d",function(d){return second_flip(d)})
+		    .attr("fill","url(#gradient_3)")
+		    .attr("class","snowflake")
+		    .attr("opacity",0);
+		gradient_3.transition().duration(duration)
+		    .attr("opacity",1);
+		
+		var gradient_4 = svg.selectAll(".gradient_4")
+		    .data([data_2]);
+		gradient_4.enter().append("path")
+		    .attr("d",function(d){return second_flip(d)})
+		    .attr("fill","url(#gradient_4)")
+		    .attr("class","snowflake")
+		    .attr("opacity",0);
+		gradient_4.transition().duration(duration)
+		    .attr("opacity",1);
+
+		// first_flip gradient
+		var gradient_2 = svg.selectAll(".gradient_2")
+		    .data([data_1]);
+		gradient_2.enter().append("path")
+		    .attr("d",function(d){return first_flip(d)})
+		    .attr("fill","url(#gradient_2)")
+		    .attr("class","snowflake")
+		    .attr("opacity",0);
+		gradient_2.transition().duration(duration)
+		    .attr("opacity",1);
+
+		// original path gradient
+		var gradient_1 = svg.selectAll(".gradient_1")
+		    .data([data_1]);
+		gradient_1.enter().append("path")
+		    .attr("d",function(d){return line(d)})
+		    .attr("fill","url(#gradient)")
+		    .attr("class","snowflake")
+		    .attr("opacity",0);
+		gradient_1.transition().duration(duration)
+		    .attr("opacity",1);
+
+		// No longer require the normal paths
+		path_1.transition().duration(duration).remove();
+		path_2.transition().duration(duration).remove();
+		path_3.transition().duration(duration).remove();
+		path_4.transition().duration(duration).remove();
+		path_5.transition().duration(duration).remove();
+		path_6.transition().duration(duration).remove();
+		path_7.transition().duration(duration).remove();
+		path_8.transition().duration(duration).remove();
+
+		setTimeout(function () {
+		    var circle_data = [];
+		    _.each(_.range(100), function () {
+			circle_data.push([Math.random()*(width-2*padding)+padding,
+					  Math.random()*(height-2*padding)+padding]);
+		    });
+
+		    var new_circle = [];
+		    _.each(circle_data,function(d){
+			new_circle.push([d[0],height-d[1]]);
+		    });
+		    circle_data = circle_data.concat(new_circle);
+		
+		    svg.selectAll("circle")
+			.data(circle_data)
+			.enter().append("circle")
+			.attr("cx",function(d){return d[0]})
+			.attr("cy",function(d){return d[1]})
+			.attr("class","glitter")
+			.attr("fill","none")
+			.attr("r",2);
+		    d3.timer(function(){
+	    		var circle = svg.selectAll(".glitter")
+	    		    .data(circle_data);
+	    		circle.transition().duration(10)
+	    		    .attr("fill",function(d,i){
+	    			var random_metric = Math.random();
+	    			return "rgba(255,255,255,"+random_metric+")";
+	    		    });			
+	    		if ($("#animation_button").html() == "Create Snowflake"){
+	    		    svg.selectAll(".glitter").remove();
+	    		    return true;
+	    		}
+		    });
+		}, duration/2);
+	    }, duration);
+
+	}, duration);
+	
+    }, duration);
+}
+
+// http://www.blackpawn.com/texts/pointinpoly/default.html
+function cross_product (u, v) {
+    return u[0]*v[1] - v[0]*u[1];
+}
+function sign (u) {
+    return u>=0
+}
+function same_side(p1, p2, a, b) {
+    var b_minus_a = [b[0]-a[0], b[1]-a[1]];
+    var p1_minus_a = [p1[0]-a[0], p1[1]-a[1]];
+    var p2_minus_a = [p2[0]-a[0], p2[1]-a[1]];
+    var cp1 = cross_product(b_minus_a, p1_minus_a);
+    var cp2 = cross_product(b_minus_a, p2_minus_a);
+    if (sign(cp1) === sign(cp2)) {
+	return true;
+    }
+    return false;
+}
+function point_in_triangle(a, b, c, that) {
+    var cursor_pos = [];
+    cursor_pos[0] = that.__origin__[0] + d3.event.dx;
+    cursor_pos[1] = that.__origin__[1] + d3.event.dy
+
+    if (same_side(cursor_pos, a, b, c) && same_side(cursor_pos, b, a, c) && same_side(cursor_pos, c, a, b)) {
+	return true;
+    }
+    return false;
+}
+
+function create_points(point_1, point_2, num_points){
+    var points = [];
+    if (point_2[0] === point_1[0]){
+	// do something different
+	for (var i = 0; i<num_points;i++){
+	    var x = point_2[0]
+	    var y = (point_2[1] - point_1[1]) * i/num_points + point_1[1];
+	    points.push([x,y]);
+	}
+	
+    }
+    else{
+	var slope = (point_2[1] - point_1[1]) / (point_2[0] - point_1[0]);
+	var y_intercept = -slope*point_1[0] + point_1[1];	
+	for (var i = 0; i<num_points;i++){
+	    var x = (point_2[0] - point_1[0]) * i/num_points + point_1[0];
+	    var y = slope*x + y_intercept;
+	    points.push([x,y]);
+	}
+    }
+    return points;
+}
+
+function create_data(path) {
+    var d = path.attr("d").substring(1);
+    var coordinates = _.map(d.split('L'), function (s) {
+	return _.map(s.split(','), Number);
+    });
+    return coordinates;
+};
+
+</script>
+
+</body>
+<p style="font-size:small; color:gray; text-align:center;">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">APES Practice for Energy Math</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.physics.drexel.edu/~tim" property="cc:attributionName" rel="cc:attributionURL">Jenny Hoffman</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.
+<br/>
+This software incorporates the MathJax TEX and CSS libraries, the JQuery and Google API, and D3.js.
+<br>"Holiday Snowflake" interactive is adapted from http://bl.ocks.org/ahwolf/4349166 and http://datascopeanalytics.com/what-we-think/2012/12/21/holiday-nerdery-snowflakes.
+</html>
