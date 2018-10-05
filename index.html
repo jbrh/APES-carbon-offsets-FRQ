@@ -5,22 +5,26 @@
 <meta charset="UTF-8" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <script type="text/javascript" src="js/a2fa5b50f404.js"></script>
-<link rel="stylesheet" href="css/d925e12f0c64.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/d925e12f0c64.css" type="text/css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <title>Carbon Offsets FRQ </title>
 
 <link rel="shortcut icon" href="greenenergy.png">
 
-<!-- the background color is the color surrounding the worksheet-->
-
-
 <style>
 
-div#right { 
-    width: 450px;
-    float: right;  
-    margin: 10 5px;  
-    	font-size: 22px;
+#main_container {
+	margin-left: 30px;
+	float: left;
+}
+
+
+#left { 
+ 	max-width: 200px;
+ 	margin-left: 40px;
+    float: left;
+    font-size: 20px;
  }
 
 h1 {
@@ -29,49 +33,35 @@ h1 {
 }
 
 h4 {
+	max-width: 900px;
 	margin-right: 20px;
 	margin-left: 20px;
 }
 
  </style>
 
-
-<!-- I downloaded TwentyTen Wordpress theme - that is what the mathjax css is based on - and found the css for the show/hide buttons using the inspect element feature, then copied it here-->
-<style type="text/css" id="input">
-#content input,
-#content textarea {
-  color: #F2072E;
-  font-weight: bold;
-}
-
-</style>
-
 </head>
-
-
 
 <body>
 
+
 <h1>Offsetting Carbon Emissions With Forests</h1>
 
-<h4><i>"Cut" the folded paper by adjusting position of black dots with your cursor. When finished making your "cuts" click on Create Snowflake to see the transformation!  Don't forget to try the energy math problems for each town to the right!</i></h4>
+<h4><i>"Cut" the folded paper by adjusting position of black dots with your cursor. When finished making your "cuts" click on Create Snowflake to see the transformation!  Don't forget to try the energy math problems for each town below!</i></h4>
 
-<div id="right">
-<br/><br/>
+<div class="row">
+
+<div id="left">
+<br>
 <a target="_blank" href="OCEBurlington.html">Burlington, VT</a>
-<br/><br/>
 <br/><br/>
 <a target="_blank" href="OCEColumbia.html">Columbia, MD</a>
 <br/><br/>
-<br/><br/>
 <a target="_blank" href="OCEFremont.html">Fremont, CA</a>
-<br/><br/>
 <br/><br/>
 <a target="_blank" href="OCEMechanicsburg.html">Mechanicsburg, PA</a>
 <br/><br/>
-<br/><br/>
 <a target="_blank" href="OCEWoodbury.html">Woodbury, CT</a>
-<br/><br/>
 <br/><br/>
 </div>
 
@@ -81,12 +71,13 @@ h4 {
     onclick="click_animation_button()">Create Snowflake</button> 
     <button id="reset_button" class="button"
     onclick="click_reset_button()">New Paper</button>
-	</div>
+  </div>
 	<br></br>
 	<br>
-	<div id="snowflakeposition">
-	</div>
+	<div id="snowflakeposition"></div>
 </div>
+</div>
+
 
 <script type="text/javascript">
   // Some variables that will be helpful to define
@@ -584,10 +575,13 @@ function create_data(path) {
 
 </script>
 
-</body>
+<br>
 <p style="font-size:small; color:gray; text-align:center;">
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">APES Practice for Energy Math</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.physics.drexel.edu/~tim" property="cc:attributionName" rel="cc:attributionURL">Jenny Hoffman</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.
 <br/>
 This software incorporates the MathJax TEX and CSS libraries, the JQuery and Google API, and D3.js.
-<br>"Holiday Snowflake" interactive is adapted from http://bl.ocks.org/ahwolf/4349166 and http://datascopeanalytics.com/what-we-think/2012/12/21/holiday-nerdery-snowflakes.
+<br>"Holiday Snowflake" interactive is adapted from http://bl.ocks.org/ahwolf/4349166
+</p>
+
+</body>
 </html>
